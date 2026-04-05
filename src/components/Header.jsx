@@ -4,12 +4,15 @@ export default function Header() {
 
     return (
         <>
-            <NavLink to="/AddTask" aria-current="page">
-                Vedi lista delle task
-            </NavLink>
-            <NavLink to="/TaskList" aria-current="page">
-                Aggiungi una task
-            </NavLink>
+            <nav >
+                <NavLink to='/' aria-current="page">Vai alla HomePage</NavLink>
+                <NavLink to="/AddTask" aria-current="page">
+                    Vedi lista delle task
+                </NavLink>
+                <NavLink to="/TaskList" aria-current="page">
+                    Aggiungi una task
+                </NavLink>
+            </nav>
         </>
     )
 }
