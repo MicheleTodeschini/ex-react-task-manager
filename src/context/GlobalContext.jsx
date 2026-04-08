@@ -13,20 +13,20 @@ async function fetchJson(url) {
 
 function GlobalProvider({ children }) {
 
-    const [task, setTask] = useState([])
+    const [tasks, setTasks] = useState([])
 
     useEffect(() => {
         async function fetchUrl() {
 
             const data = await fetchJson(url)
-            setTask(data)
+            setTasks(data)
         }
         fetchUrl()
 
     }, [])
-    console.log(task);
+
     return (
-        <GlobalContext.Provider value={{ task, setTask }}>
+        <GlobalContext.Provider value={{ tasks, setTasks }}>
             {children}
         </GlobalContext.Provider>
     );

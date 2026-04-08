@@ -6,10 +6,10 @@ export default function Header() {
         <>
             <nav >
                 <NavLink to='/' aria-current="page">Vai alla HomePage</NavLink>
-                <NavLink to="/AddTask" aria-current="page">
+                <NavLink to="/TaskList" aria-current="page">
                     Vedi lista delle task
                 </NavLink>
-                <NavLink to="/TaskList" aria-current="page">
+                <NavLink to="/AddTask" aria-current="page">
                     Aggiungi una task
                 </NavLink>
             </nav>
