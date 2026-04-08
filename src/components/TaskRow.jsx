@@ -1,9 +1,8 @@
-import { useGlobalContext } from "../context/GlobalContext";
+import React from "react";
 
-export default function TaskRow() {
+const TaskRow = React.memo(({ id, title, status, createdAt }) => {
 
-    const { tasks } = useGlobalContext()
-    console.log(tasks);
+
 
 
     const statusToClass = {
@@ -12,25 +11,27 @@ export default function TaskRow() {
         'Done': 'bg-success'
     }
 
-
-
     return (
 
         <>
-            {tasks?.map((task) => (
-                <div className='row' key={task.id}>
+            {
+
+                <div className='row' key={id}>
                     <div className="col-sm " >
-                        <h3 className="bold">{task.title}</h3>
+                        <h3 className="bold">{title}</h3>
                     </div>
-                    <div className={`col-sm ${statusToClass[task.status]}`}>
-                        <h3 className="bold">{task.status}</h3>
+                    <div className={`col-sm ${statusToClass[status]}`}>
+                        <h3 className="bold">{status}</h3>
                     </div>
                     <div className="col-sm">
-                        <h3 className="bold">{task.createdAt}</h3>
+                        <h3 className="bold">{createdAt}</h3>
                     </div>
                 </div>
-            ))}
+            }
+
 
         </>
     )
-}
+})
+
+export default TaskRow

@@ -1,9 +1,10 @@
 import Header from "../components/Header";
 import TaskRow from "../components/TaskRow";
+import { useGlobalContext } from "../context/GlobalContext";
 
 
 export default function TaskList() {
-
+    const { tasks } = useGlobalContext()
 
     return (
         <>
@@ -20,7 +21,11 @@ export default function TaskList() {
                         <h3 className="bold">Data di creazione</h3>
                     </div>
                 </div>
-                <TaskRow />
+                {
+                    tasks.map(task => (
+                        <TaskRow {...task} key={task.id} />
+                    ))
+                }
             </div>
         </>
     )
