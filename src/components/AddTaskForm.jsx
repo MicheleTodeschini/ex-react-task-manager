@@ -1,7 +1,9 @@
 import { useMemo, useRef, useState } from "react"
+import useTasks from "../hooks/useTasks";
 
 export default function AddTaskForm() {
 
+    const { addTask } = useTasks();
     const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/\\\`~`;
 
     const [title, setTitle] = useState('')
@@ -9,16 +11,22 @@ export default function AddTaskForm() {
     const descriptionRef = useRef()
     const statoTaskRef = useRef()
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
-        const statoTask = statoTaskRef.current.value
+        const status = statoTaskRef.current.value
         const description = descriptionRef.current.value
 
-        console.log(`
-            Titolo: ${title}
-            description: ${description}
-            Stato Task: ${statoTask}
-            `);
+        try {
+            await addTask({
+                title,
+                description,
+                status
+            });
+            alert('task aggiunta')
+        } catch (err) {
+            alert(err)
+            console.error(err.message);
+        }
         setTitle('')
         statoTaskRef.current.value = ''
         descriptionRef.current.value = ''
@@ -64,7 +72,7 @@ export default function AddTaskForm() {
                         required
                     >
                         <option value="">Selezione lo stato</option>
-                        <option value="To Do">To Do</option>
+                        <option value="To do">To Do</option>
                         <option value="Doing">Doing</option>
                         <option value="Done">Done</option>
                     </select>
