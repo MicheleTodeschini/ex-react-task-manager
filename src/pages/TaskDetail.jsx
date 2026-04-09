@@ -40,7 +40,7 @@ const TaskDetail = React.memo(() => {
     }, [id])
 
     function handleDelete() {
-        console.log('task eliminata');
+        console.log('Elimino task');
 
     }
 
