@@ -24,7 +24,7 @@ const TaskRow = React.memo(({ id, title, status, createdAt }) => {
                         <h3 className="bold">{status}</h3>
                     </div>
                     <div className="col-sm">
-                        <h3 className="bold">{createdAt}</h3>
+                        <h3 className="bold">{` ${new Date(createdAt).toLocaleString()}`}</h3>
                     </div>
                 </div>
             }
