@@ -2,7 +2,7 @@ import Header from '../components/Header'
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 
-const TaskDetail = React.memo(({ title, status, createdAt }) => {
+const TaskDetail = React.memo(() => {
 
     const { id } = useParams()
     const url = import.meta.env.VITE_URL_API
@@ -39,6 +39,11 @@ const TaskDetail = React.memo(({ title, status, createdAt }) => {
         fetchSingolo()
     }, [id])
 
+    function handleDelete() {
+        console.log('task eliminata');
+
+    }
+
     return (
         <>
             <Header />
@@ -49,12 +54,15 @@ const TaskDetail = React.memo(({ title, status, createdAt }) => {
                         <NavLink to="/task/:id" aria-current="page">
                             {singleTask.title}
                         </NavLink>
+                        <p>{singleTask.description}</p>
+                        <button onClick={handleDelete} className='btn btn-danger'>Elimina task</button>
                     </div>
                     <div className={`col-sm ${statusToClass[singleTask.status]}`}>
                         <h3 className="bold">{singleTask.status}</h3>
                     </div>
                     <div className="col-sm">
                         <h3 className="bold">{` ${new Date(singleTask.createdAt).toLocaleString()}`}</h3>
+
                     </div>
                 </div>
             }
