@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const TaskRow = React.memo(({ id, title, status, createdAt }) => {
 
@@ -18,7 +19,9 @@ const TaskRow = React.memo(({ id, title, status, createdAt }) => {
 
                 <div className='row' key={id}>
                     <div className="col-sm " >
-                        <h3 className="bold">{title}</h3>
+                        <NavLink to={`/task/${id}`} aria-current="page">
+                            {title}
+                        </NavLink>
                     </div>
                     <div className={`col-sm ${statusToClass[status]}`}>
                         <h3 className="bold">{status}</h3>
