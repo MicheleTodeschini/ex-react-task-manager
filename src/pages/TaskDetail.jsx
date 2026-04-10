@@ -1,6 +1,6 @@
 import Header from '../components/Header'
 import React, { useEffect, useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, Link } from 'react-router-dom'
 import useTasks from '../hooks/useTasks'
 
 const TaskDetail = React.memo(() => {
@@ -54,11 +54,15 @@ const TaskDetail = React.memo(() => {
 
                 <div className='row' key={id}>
                     <div className="col-sm " >
-                        <NavLink to="/task/:id" aria-current="page">
-                            {singleTask.title}
-                        </NavLink>
+                        <h3> {singleTask.title}</h3>
+
+
                         <p>{singleTask.description}</p>
-                        <button onClick={handleDelete} className='btn btn-danger'>Elimina task</button>
+                        <Link to={'/TaskList'}>
+                            <button onClick={handleDelete}
+
+                                className='btn btn-danger'>Elimina task</button>
+                        </Link>
                     </div>
                     <div className={`col-sm ${statusToClass[singleTask.status]}`}>
                         <h3 className="bold">{singleTask.status}</h3>
