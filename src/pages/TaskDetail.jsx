@@ -1,11 +1,13 @@
 import Header from '../components/Header'
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
+import useTasks from '../hooks/useTasks'
 
 const TaskDetail = React.memo(() => {
 
     const { id } = useParams()
     const url = import.meta.env.VITE_URL_API
+    const { removeTask } = useTasks()
 
     const [singleTask, setSingleTask] = useState([])
 
@@ -41,6 +43,7 @@ const TaskDetail = React.memo(() => {
 
     function handleDelete() {
         console.log('Elimino task');
+        removeTask(parseInt(id))
 
     }
 

@@ -40,8 +40,22 @@ export default function useTasks() {
         setTasks(prevTasks => [...prevTasks, data.task]);
     };
 
-    const removeTask = () => {
+    const removeTask = async (id) => {
+        const response = await fetch(`${url}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json();
 
+        if (!data.success) {
+            throw new Error(data.message);
+        } else {
+            console.log({ 'success': data.success });
+            alert('Task eliminata')
+        }
     }
 
     const updateTask = () => {
