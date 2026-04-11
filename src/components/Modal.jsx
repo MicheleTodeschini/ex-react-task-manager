@@ -9,7 +9,7 @@ export default function Modal({ title, content, show, onClose = () => { }, onCon
             <div className="modal-container">
                 <div className="custom-modal">
                     <h2>{title}</h2>
-                    <p>{content}</p>
+                    <h4>{content}</h4>
                     <button onClick={onClose} >Annulla</button>
                     <button onClick={onConfirm} >Conferma</button>
                 </div>

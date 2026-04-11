@@ -1,24 +1,19 @@
 import Header from '../components/Header'
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import useTasks from '../hooks/useTasks'
 import Modal from '../components/Modal'
+import EditTaskModal from '../components/EditTaskModal'
+import { useGlobalContext } from '../context/GlobalContext'
 
 const TaskDetail = React.memo(() => {
 
     const { id } = useParams()
-    const url = import.meta.env.VITE_URL_API
-    const { removeTask } = useTasks()
+    const { removeTask, updateTask, tasks } = useGlobalContext()
     const navigate = useNavigate()
 
-    const [singleTask, setSingleTask] = useState({})
+    const singleTask = tasks.find(task => task.id === parseInt(id))
     const [show, setShow] = useState(false)
-
-    async function fetchJson(url) {
-        const response = await fetch(url)
-        const obj = await response.json()
-        return obj
-    }
+    const [editModal, setEditModal] = useState(false)
 
     const statusToClass = {
         'To do': 'bg-danger',
@@ -26,23 +21,9 @@ const TaskDetail = React.memo(() => {
         'Done': 'bg-success'
     }
 
-    useEffect(() => {
-        async function fetchSingolo() {
-            try {
-                const data = await fetchJson(url)
-
-                const taskSingola = data.find(task => task.id === parseInt(id))
-
-                console.log(taskSingola)
-
-                setSingleTask(taskSingola)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        fetchSingolo()
-    }, [id])
+    if (!singleTask) {
+        return <p>Loading...</p>
+    }
 
     function handleDelete() {
         console.log('Elimino task');
@@ -50,40 +31,55 @@ const TaskDetail = React.memo(() => {
         navigate('/TaskList')
     }
 
+    const handleUpdate = async updatedTask => {
+        try {
+            await updateTask(updatedTask.id, updatedTask)
+            alert('modifica della task avvenuta correttamente')
+            setEditModal(false)
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     return (
         <>
             <Header />
-            {
-
-                <div className='row' key={id}>
-                    <div className="col-sm " >
-                        <h3> {singleTask.title}</h3>
 
 
-                        <p>{singleTask.description}</p>
-
-                        <button onClick={() => setShow(true)}
-
-                            className='btn btn-danger'>Elimina task</button>
-
-                        <Modal
-                            title={singleTask.title}
-                            content={singleTask.description}
-                            show={show}
-                            onClose={() => setShow(false)}
-                            onConfirm={handleDelete}
-
-                        />
-                    </div>
-                    <div className={`col-sm ${statusToClass[singleTask.status]}`}>
-                        <h3 className="bold">{singleTask.status}</h3>
-                    </div>
-                    <div className="col-sm">
-                        <h3 className="bold">{` ${new Date(singleTask.createdAt).toLocaleString()}`}</h3>
-
-                    </div>
+            <div className='row' key={id}>
+                <div className="col-sm " >
+                    <h3> {singleTask.title}</h3>
+                    <h4>{singleTask.description}</h4>
+                    <button onClick={() => setShow(true)}
+                        className='btn btn-danger'>Elimina task
+                    </button>
+                    <button onClick={() => setEditModal(true)} className='btn btn-info'>
+                        Modifica Task
+                    </button>
                 </div>
-            }
+                <div className={`col-sm ${statusToClass[singleTask.status]}`}>
+                    <h3 className="bold">{singleTask.status}</h3>
+                </div>
+                <div className="col-sm">
+                    <h3 className="bold">{` ${new Date(singleTask.createdAt).toLocaleString()}`}</h3>
+
+                </div>
+                <Modal
+                    title={singleTask.title}
+                    content={singleTask.description}
+                    show={show}
+                    onClose={() => setShow(false)}
+                    onConfirm={handleDelete}
+
+                />
+                <EditTaskModal
+                    task={singleTask}
+                    show={editModal}
+                    onClose={() => setEditModal(false)}
+                    onSave={handleUpdate}
+                />
+            </div>
+
         </>
     )
 })

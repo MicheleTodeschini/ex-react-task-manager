@@ -54,12 +54,30 @@ export default function useTasks() {
             throw new Error(data.message);
         } else {
             console.log({ 'success': data.success });
+            setTasks(prevTasks => prevTasks.filter(task => task.id !== id))
             alert('Task eliminata')
         }
+
     }
 
-    const updateTask = () => {
+    const updateTask = async (id, { title, description, status }) => {
+        const response = await fetch(`${url}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ title, description, status })
+        })
+        const data = await response.json();
 
+        if (!data.success) {
+            throw new Error(data.message);
+        } else {
+            console.log({ 'success': data.success });
+
+        }
+        setTasks(prevTasks => prevTasks.map(task => task.id === id ? data.task : task))
     }
 
     return { tasks, addTask, removeTask, updateTask }
