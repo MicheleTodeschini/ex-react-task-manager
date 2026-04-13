@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Header from "../components/Header";
 import TaskRow from "../components/TaskRow";
 import { useGlobalContext } from "../context/GlobalContext";
@@ -9,6 +9,7 @@ export default function TaskList() {
     const [sortBy, setSortBy] = useState("createdAt")
     const [sortOrder, setSortOrder] = useState(1)
     const [searchQuery, setSearchQuery] = useState('')
+    const debounceSearch = useCallback(debounce(setSearchQuery, 500))
 
     function handleSort(keyWord) {
         if (sortBy === keyWord) {
@@ -49,25 +50,35 @@ export default function TaskList() {
         return sorted
     }, [tasks, sortBy, sortOrder, searchQuery])
 
-
+    function debounce(callback, delay) {
+        let timer
+        return (value) => {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                callback(value)
+            }, delay);
+        }
+    }
 
     return (
         <>
             <Header />
-            <input placeholder="Cerca qui le tue task"
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)} />
             <div className="container">
+                <input
+                    className="m-3"
+                    placeholder="Cerca qui le tue task"
+                    type="text"
+
+                    onChange={e => debounceSearch(e.target.value)} />
                 <div className="row">
-                    <div className="col-sm" onClick={() => handleSort('title')}>
-                        <h3 className="bold">Nome</h3>
+                    <div className="col-sm bg-primary" onClick={() => handleSort('title')}>
+                        <h3 className="bold text-white">Nome</h3>
                     </div>
-                    <div className="col-sm" onClick={() => handleSort('status')}>
-                        <h3 className="bold">Stato</h3>
+                    <div className="col-sm bg-info" onClick={() => handleSort('status')}>
+                        <h3 className="bold text-white">Stato</h3>
                     </div>
-                    <div className="col-sm" onClick={() => handleSort('createdAt')}>
-                        <h3 className="bold">Data di creazione</h3>
+                    <div className="col-sm bg-primary" onClick={() => handleSort('createdAt')}>
+                        <h3 className="bold text-white">Data di creazione</h3>
                     </div>
                 </div>
                 {

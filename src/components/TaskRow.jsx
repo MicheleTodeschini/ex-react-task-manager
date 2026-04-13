@@ -17,14 +17,14 @@ const TaskRow = React.memo(({ id, title, status, createdAt }) => {
         <>
             {
 
-                <div className='row' key={id}>
+                <div className='row border border-secondary bg-light' key={id}>
                     <div className="col-sm " >
-                        <NavLink to={`/task/${id}`} aria-current="page">
+                        <NavLink to={`/task/${id}`} className='text-decoration-none text-dark ' aria-current="page">
                             {title}
                         </NavLink>
                     </div>
                     <div className={`col-sm ${statusToClass[status]}`}>
-                        <h3 className="bold">{status}</h3>
+                        <h3 className="bold ">{status}</h3>
                     </div>
                     <div className="col-sm">
                         <h3 className="bold">{` ${new Date(createdAt).toLocaleString()}`}</h3>

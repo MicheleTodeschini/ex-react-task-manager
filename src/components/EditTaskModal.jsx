@@ -22,31 +22,41 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
         <Modal
             title='Modifica task'
             content={
-                <form ref={formRef} onSubmit={handleSubmit}>
-                    <label>
-                        Nome Task: <input
+                <form ref={formRef} onSubmit={handleSubmit} className="d-flex flex-column gap-3">
+
+                    <div>
+                        <label className="form-label">Nome Task</label>
+                        <input
+                            className="form-control"
                             type="text"
                             value={editedTask.title}
                             onChange={e => changeEditedTask('title', e)}
                         />
-                    </label>
-                    <label>
-                        Descrizione della TAsk: <input
+                    </div>
+
+                    <div>
+                        <label className="form-label">Descrizione della Task</label>
+                        <input
+                            className="form-control"
                             type="text"
                             value={editedTask.description}
                             onChange={e => changeEditedTask('description', e)}
                         />
-                    </label>
-                    <label>
-                        Stato della task:
+                    </div>
 
-                        <select value={editedTask.status}
-                            onChange={e => changeEditedTask('status', e)}>
+                    <div>
+                        <label className="form-label">Stato della task</label>
+                        <select
+                            className="form-select"
+                            value={editedTask.status}
+                            onChange={e => changeEditedTask('status', e)}
+                        >
                             {['To do', 'Doing', 'Done'].map((value, index) => (
-                                <option value={value} key={index} >{value}</option>
+                                <option value={value} key={index}>{value}</option>
                             ))}
                         </select>
-                    </label>
+                    </div>
+
                 </form>
             }
             confirmText='Salva'

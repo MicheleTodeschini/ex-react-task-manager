@@ -4,9 +4,12 @@ export default function Homepage() {
     return (
         <>
             <Header />
-            <h1>Benvenuto nel nostro sito di gestione delle task!</h1>
+            <div className="container">
 
-            <h3>Esplorale qui sopra</h3>
+                <h1 className="text-center">Benvenuto nel nostro sito di gestione delle task!</h1>
+
+                <h3 className="text-center">Esplorale qui sopra</h3>
+            </div>
         </>
     )
 }

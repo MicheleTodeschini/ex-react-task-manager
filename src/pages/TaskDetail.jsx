@@ -45,39 +45,44 @@ const TaskDetail = React.memo(() => {
         <>
             <Header />
 
+            <div className='container '>
 
-            <div className='row' key={id}>
-                <div className="col-sm " >
-                    <h3> {singleTask.title}</h3>
-                    <h4>{singleTask.description}</h4>
-                    <button onClick={() => setShow(true)}
-                        className='btn btn-danger'>Elimina task
-                    </button>
-                    <button onClick={() => setEditModal(true)} className='btn btn-info'>
-                        Modifica Task
-                    </button>
-                </div>
-                <div className={`col-sm ${statusToClass[singleTask.status]}`}>
-                    <h3 className="bold">{singleTask.status}</h3>
-                </div>
-                <div className="col-sm">
-                    <h3 className="bold">{` ${new Date(singleTask.createdAt).toLocaleString()}`}</h3>
+                <div className='row m-3 border border-dark' key={id}>
+                    <div className="col-sm " >
+                        <h3> {singleTask.title}</h3>
+                        <h4>{singleTask.description}</h4>
+                        <button onClick={() => setShow(true)}
+                            className='btn btn-danger m-3'>Elimina task
+                        </button>
+                        <button onClick={() => setEditModal(true)} className='btn btn-info'>
+                            Modifica Task
+                        </button>
+                    </div>
+                    <div className={`col-sm ${statusToClass[singleTask.status]}`}>
+                        <h3 className="bold text-center mt-4">{singleTask.status}</h3>
+                    </div>
+                    <div className="col-sm">
+                        <h3 className="bold mt-4">{` ${new Date(singleTask.createdAt).toLocaleString()}`}</h3>
+
+                    </div >
+
+
+                    <Modal
+                        title={singleTask.title}
+                        content={singleTask.description}
+                        show={show}
+                        onClose={() => setShow(false)}
+                        onConfirm={handleDelete}
+
+                    />
+                    <EditTaskModal
+                        task={singleTask}
+                        show={editModal}
+                        onClose={() => setEditModal(false)}
+                        onSave={handleUpdate}
+                    />
 
                 </div>
-                <Modal
-                    title={singleTask.title}
-                    content={singleTask.description}
-                    show={show}
-                    onClose={() => setShow(false)}
-                    onConfirm={handleDelete}
-
-                />
-                <EditTaskModal
-                    task={singleTask}
-                    show={editModal}
-                    onClose={() => setEditModal(false)}
-                    onSave={handleUpdate}
-                />
             </div>
 
         </>
