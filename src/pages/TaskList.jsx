@@ -8,7 +8,7 @@ export default function TaskList() {
     const { tasks } = useGlobalContext()
     const [sortBy, setSortBy] = useState("createdAt")
     const [sortOrder, setSortOrder] = useState(1)
-    const [searchQuery, setSearchQuery] = useState()
+    const [searchQuery, setSearchQuery] = useState('')
 
     function handleSort(keyWord) {
         if (sortBy === keyWord) {
@@ -20,7 +20,11 @@ export default function TaskList() {
     }
 
     const sortedTask = useMemo(() => {
-        const sorted = [...tasks]
+        let sorted = [...tasks]
+
+        if (searchQuery) {
+            sorted = sorted.filter(task => task.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        }
 
         sorted.sort((a, b) => {
             let result = 0
@@ -41,8 +45,11 @@ export default function TaskList() {
             }
             return result * sortOrder;
         })
+
         return sorted
-    }, [tasks, sortBy, sortOrder])
+    }, [tasks, sortBy, sortOrder, searchQuery])
+
+
 
     return (
         <>
